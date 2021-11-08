@@ -14,6 +14,7 @@ import {
   MenuItem,
   FormControl,
   Select,
+  CircularProgress,
 } from "@mui/material";
 
 const Home = () => {
@@ -22,6 +23,7 @@ const Home = () => {
   const [paginationCount, setPaginationCount] = useState(0);
   const [newSpaceData, setNewSpaceData] = useState([]);
   const [selectedPage, setSelectedPage] = useState(1);
+  const [dataLoaded, setDataLoaded] = useState(false);
 
   useEffect(() => {
     fetch("https://api.spaceflightnewsapi.net/v3/articles")
@@ -29,6 +31,7 @@ const Home = () => {
       .then((data) => {
         setSpaceData(data);
         setNewSpaceData(data.slice(0, 5));
+        setDataLoaded(true);
       });
   }, []);
 
@@ -42,7 +45,7 @@ const Home = () => {
     let end = start + recordCount;
     setNewSpaceData(spaceData.slice(start, end));
   }, [recordCount, selectedPage, spaceData]);
-  
+
   return (
     <div className="container">
       <div className="my-4 d-flex justify-content-end">
@@ -85,6 +88,11 @@ const Home = () => {
           </Card>
         ))}
       </div>
+      {!dataLoaded && (
+        <Box sx={{ display: "flex", justifyContent: "center" }}>
+          <CircularProgress />
+        </Box>
+      )}
       <div className="d-flex justify-content-center my-5">
         <Stack spacing={2}>
           <Pagination

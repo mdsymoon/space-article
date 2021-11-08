@@ -1,19 +1,23 @@
 import React, { useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
-import { Button } from "@mui/material";
+import { Button, Box, CircularProgress} from "@mui/material";
 
 const SelectedArticle = () => {
   const { id } = useParams();
   const [selectedArticle, setSelectedArticle] = useState({});
+  const [dataLoaded, setDataLoaded] = useState(false);
 
   useEffect(() => {
     fetch(`https://api.spaceflightnewsapi.net/v3/articles/${id}`)
       .then((res) => res.json())
-      .then((data) => setSelectedArticle(data));
+      .then((data) => {
+        setSelectedArticle(data);
+        setDataLoaded(true);
+      });
   }, [id]);
 
   return (
-    <div className="container mt-5">
+    <div className="container my-5">
       <Link to="/">Go Home</Link>
       <img
         src={selectedArticle.imageUrl}
@@ -40,6 +44,11 @@ const SelectedArticle = () => {
       <Button variant="outlined" href={selectedArticle.url} target="_blank">
         Read Full Article
       </Button>
+      {!dataLoaded && (
+        <Box sx={{ display: "flex", justifyContent: "center" }}>
+          <CircularProgress />
+        </Box>
+      )}
     </div>
   );
 };
