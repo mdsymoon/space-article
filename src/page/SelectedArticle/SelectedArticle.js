@@ -11,10 +11,10 @@ const SelectedArticle = () => {
       .then((res) => res.json())
       .then((data) => setSelectedArticle(data));
   }, [id]);
+
   return (
     <div className="container mt-5">
-      <Link to="/" >Go Home</Link>
-
+      <Link to="/">Go Home</Link>
       <img
         src={selectedArticle.imageUrl}
         alt={selectedArticle.title}

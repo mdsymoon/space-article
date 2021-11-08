@@ -36,12 +36,13 @@ const Home = () => {
     setNewSpaceData(spaceData.slice(0, recordCount));
     let pageCount = Math.ceil(spaceData.length / recordCount);
     setPaginationCount(pageCount);
-    let page = selectedPage - 1
+    let page = selectedPage - 1;
     let start = recordCount * page;
     console.log(start);
     let end = start + recordCount;
     setNewSpaceData(spaceData.slice(start, end));
   }, [recordCount, selectedPage, spaceData]);
+  
   return (
     <div className="container">
       <div className="my-4 d-flex justify-content-end">
